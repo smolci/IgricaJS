@@ -1,0 +1,123 @@
+@font-face {
+    font-family: 'PressStart2P';
+    src:  url('./assets/PressStart2P.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    box-sizing: border-box;
+    font-family: 'PressStart2P';
+}
+
+body{
+    margin: 0;
+    color:white;
+    background-image: url('./assets/background/blue/1.png');
+}
+
+#mainMenu {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    margin: 0;
+    padding: 20px;
+}
+
+button {
+    font-size: 24px;
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+#game{
+    display: none;
+}
+
+#pauseMenu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    z-index: 1000;
+}
+
+#optionsModal h1,
+#optionsModal p,
+#optionsModal div {
+    margin: 10px;
+}
+
+#characterSelectionDiv{
+    display: none;
+    text-align: center;
+}
+
+#character-selection{
+    display: flex;
+    margin: 2%;
+    gap: 5%;
+    text-align: center;
+}
+
+.playerSelection{
+    display: flex;
+    flex-direction: column;
+}
+.characters{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5%;
+}
+.character{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+.character:hover {
+    transform: scale(1.1);
+}
+.character.selected {
+    border: 5px solid white;
+    border-radius: 10%;
+    padding: 1%;
+    background-color: #2980b9;
+}
+
+#mapSelection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mapImage{
+    width: 200px;
+    margin-top: 10px;
+    border: 1px solid white;
+}
+.mapImage:hover{
+    box-shadow: 0 0 25px rgba(255, 255, 255, 1);
+}
+.mapImage.selected{
+    border: 5px solid white;
+    border-radius: 5%;
+}

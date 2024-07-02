@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+    <head>
+        <title>Javascript Game</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <!-- Main Menu -->
+        <div id="mainMenu">
+            <h1>2D 1v1 platformer</h1>
+            <button id="startButton" onclick="openCharacterSelectionScreen()">Start Game</button>
+            <button id="optionsButton" onclick="openOptions()">Options</button>    
+        </div>
+
+        <!-- Options Modal -->
+        <div id="optionsModal" style="display: none;">
+            <h1 style="text-align: center;">Options</h1>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <!-- Player Keybinds -->
+                <div style="text-align: center;">
+                    <p>Player Keybinds:</p>
+                    <div>
+                        <label for="playerJump">Jump:</label>
+                        <input type="text" id="playerJump" readonly>
+                        <button onclick="captureKey('playerJump')">Set Key</button>
+                    </div>
+
+                    <div>
+                        <label for="playerAttack">Attack:</label>
+                        <input type="text" id="playerAttack" readonly>
+                        <button onclick="captureKey('playerAttack')">Set Key</button>
+                    </div>
+
+                    <div>
+                        <label for="playerMoveLeft">Move Left:</label>
+                        <input type="text" id="playerMoveLeft" readonly>
+                        <button onclick="captureKey('playerMoveLeft')">Set Key</button>
+                    </div>
+
+                    <div>
+                        <label for="playerMoveRight">Move Right:</label>
+                        <input type="text" id="playerMoveRight" readonly>
+                        <button onclick="captureKey('playerMoveRight')">Set Key</button>
+                    </div>
+                </div>
+
+                <!-- Enemy Keybinds -->
+                <div style="text-align: center;">
+                    <p>Enemy Keybinds:</p>
+                    <div>
+                        <label for="enemyJump">Jump:</label>
+                        <input type="text" id="enemyJump" readonly>
+                        <button onclick="captureKey('enemyJump')">Set Key</button>
+                    </div>
+
+                    <div>
+                        <label for="enemyAttack">Attack:</label>
+                        <input type="text" id="enemyAttack" readonly>
+                        <button onclick="captureKey('enemyAttack')">Set Key</button>
+                    </div>
+
+                    <div>
+                        <label for="enemyMoveLeft">Move Left:</label>
+                        <input type="text" id="enemyMoveLeft" readonly>
+                        <button onclick="captureKey('enemyMoveLeft')">Set Key</button>
+                    </div>
+
+                    <div>
+                        <label for="enemyMoveRight">Move Right:</label>
+                        <input type="text" id="enemyMoveRight" readonly>
+                        <button onclick="captureKey('enemyMoveRight')">Set Key</button>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <label for="volumeControl">Volume:</label>
+                <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5" onchange="adjustVolume()">    
+            </div>
+            <div style="text-align: center;">
+                <button onclick="saveKeybinds()">Save</button>
+                <button onclick="closeOptions()">Cancel</button>
+                <button onclick="resetKeybinds()">Reset Keybinds</button>
+            </div>
+        </div>
+
+        <!-- Pause menu -->
+        <div id="pauseMenu" style="display: none; background-color: black;">
+            <h1 style="color: white;">Game Paused</h1>
+            <button onclick="resumeGame()">Resume</button>
+            <button onclick="openOptions()">Options</button>
+            <button onclick="restartGame()">Restart</button>
+            <button onclick="exitGame()">Exit</button>
+        </div>
+
+        <!-- Character selection screen -->
+        <div id="characterSelectionDiv">
+            <div id="character-selection">
+                <div class="playerSelection">
+                    <h1>Player 1 character</h1>
+                    <div class="characters" id="player1Characters">
+                        <div class="character" id="evilWizard" data-player="1" onclick="selectCharacter('evilWizard', 1)">
+                            <p>EvilWizard</p>
+                            <img src="./assets/characters/evilWizard/Character.png">
+                        </div>
+                        <div class="character" id="heroKnight" data-player="1" onclick="selectCharacter('heroKnight', 1)">
+                            <p>HeroKnight</p>
+                            <img src="./assets/characters/heroKnight/Character.png">
+                        </div>
+                        <div class="character" id="martialHero" data-player="1" onclick="selectCharacter('martialHero', 1)">
+                            <p>MartialHero</p>
+                            <img src="./assets/characters/martialHero/Character.png">
+                        </div>
+                        <div class="character" id="medievalKing" data-player="1" onclick="selectCharacter('medievalKing', 1)">
+                            <p>King</p>
+                            <img src="./assets/characters/medievalKing/Character.png">
+                        </div>
+                        <div class="character" id="medievalKing2" data-player="1" onclick="selectCharacter('medievalKing2', 1)">
+                            <p>King 2</p>
+                            <img src="./assets/characters/medievalKing2/Character.png">
+                        </div>
+                        <div class="character" id="medievalWarrior" data-player="1" onclick="selectCharacter('medievalWarrior', 1)">
+                            <p>Warrior</p>
+                            <img src="./assets/characters/medievalWarrior/Character.png">
+                        </div>
+                        <div class="character" id="medievalWarrior2" data-player="1" onclick="selectCharacter('medievalWarrior2', 1)">
+                            <p>Warrior 2</p>
+                            <img src="./assets/characters/medievalWarrior2/Character.png">
+                        </div>
+                        <div class="character" id="wizard" data-player="1" onclick="selectCharacter('wizard', 1)">
+                            <p>Wizard</p>
+                            <img src="./assets/characters/wizard/Character.png">
+                        </div>
+                    </div>
+                </div>
+                <div id="mapSelection">
+                    <h1>Map</h1>
+                    <img class="mapImage" id="map1" data-image="1" src="assets/maps/map1.png" onclick="selectMap('map1')">
+                    <img class="mapImage" id="map2" data-image="1" src="assets/maps/map2.png" onclick="selectMap('map2')">
+                    <img class="mapImage" id="map3" data-image="1" src="assets/maps/map3.png" onclick="selectMap('map3')">
+                    <img class="mapImage" id="map4" data-image="1" src="assets/maps/map4.png" onclick="selectMap('map4')">
+                    <img class="mapImage" id="map5" data-image="1" src="assets/maps/map5.png" onclick="selectMap('map5')">
+                </div>
+                <div class="playerSelection">
+                    <h1>Player 2 character</h1>
+                    <div class="characters" id="player2Characters">
+                        <div class="character" id="evilWizard_left" data-player="2" onclick="selectCharacter('evilWizard_left', 2)">
+                            <p>EvilWizard</p>
+                            <img src="./assets/characters/evilWizard_left/Character.png">
+                        </div>
+                        <div class="character" id="heroKnight_left" data-player="2" onclick="selectCharacter('heroKnight_left', 2)">
+                            <p>HeroKnight</p>
+                            <img src="./assets/characters/heroKnight_left/Character.png">
+                        </div>
+                        <div class="character" id="martialHero_left" data-player="2" onclick="selectCharacter('martialHero_left', 2)">
+                            <p>MartialHero</p>
+                            <img src="./assets/characters/martialHero_left/Character.png">
+                        </div>
+                        <div class="character" id="medievalKing_left" data-player="2" onclick="selectCharacter('medievalKing_left', 2)">
+                            <p>King</p>
+                            <img src="./assets/characters/medievalKing_left/Character.png">
+                        </div>
+                        <div class="character" id="medievalKing2_left" data-player="2" onclick="selectCharacter('medievalKing2_left', 2)">
+                            <p>King 2</p>
+                            <img src="./assets/characters/medievalKing2_left/Character.png">
+                        </div>
+                        <div class="character" id="medievalWarrior_left" data-player="2" onclick="selectCharacter('medievalWarrior_left', 2)">
+                            <p>Warrior</p>
+                            <img src="./assets/characters/medievalWarrior_left/Character.png">
+                        </div>
+                        <div class="character" id="medievalWarrior2_left" data-player="2" onclick="selectCharacter('medievalWarrior2_left', 2)">
+                            <p>Warrior 2</p>
+                            <img src="./assets/characters/medievalWarrior2_left/Character.png">
+                        </div>
+                        <div class="character" id="wizard_left" data-player="2" onclick="selectCharacter('wizard_left', 2)">
+                            <p>Wizard</p>
+                            <img src="./assets/characters/wizard_left/Character.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="startGame()">Play</button>
+        </div>
+        
+        <audio id="hitSound">
+            <source src="assets/hit.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+
+        <audio id="backgroundMusic" loop>
+            <source src="assets/background_music.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+
+        <!-- Game -->
+        <div id="game">
+            
+            <div style="position: relative; display: inline-block;">
+                <div style="
+                        position: absolute; 
+                        display: flex;
+                        width: 100%;
+                        align-items: center;
+                        padding: 20px;"
+                >
+                    <!-- Player health -->
+                    <div 
+                        style="
+                        position: relative; 
+                        width: 100%; 
+                        display: flex; 
+                        justify-content: flex-end;
+                        border-top: 3px solid black;
+                        border-left: 3px solid black;
+                        border-bottom: 3px solid black;
+                    ">
+                        <div 
+                            style="background-color: red; height: 30px; width: 100%;"
+                        ></div>
+                        <div 
+                            id="playerHealth"
+                            style="
+                            position: absolute; 
+                            background-color: #2a6a92; 
+                            top: 0; 
+                            right: 0; 
+                            bottom: 0; 
+                            width: 100%"
+                        ></div>
+                    </div>
+        
+                    <!-- Timer -->
+                    <div 
+                        id="timer"
+                        style="
+                        background-color: #061c2c; 
+                        width: 100px; 
+                        height: 50px; 
+                        flex-shrink: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        border: 3px solid black;"
+                        
+                    >
+                        10
+                    </div>
+        
+                    <!-- Enemy health -->
+                    <div 
+                        style="
+                        position: relative; 
+                        width: 100%;
+                        border-top: 3px solid black;
+                        border-right: 3px solid black;
+                        border-bottom: 3px solid black;
+                    ">
+                        <div 
+                            style="background-color: red; height: 30px;"
+                        ></div>
+                        <div 
+                            id="enemyHealth"
+                            style="
+                            position: absolute; 
+                            background-color: #2a6a92; 
+                            top: 0; 
+                            right: 0; 
+                            bottom: 0; 
+                            left: 0;"
+                        ></div>
+                    </div>
+                    
+                </div>
+        
+                <!-- Game ending -->
+                <div id="endingDiv"
+                    style="position: absolute; 
+                    color: black; 
+                    align-items: center; 
+                    justify-content: center;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    display: none;
+                    flex-direction: column;
+                    text-align: center;
+                ">
+                    <h1 id="ending">Tie</h1>
+                    <button onclick="restartGame()">Restart Game</button>
+                    <button onclick="exitGame()">Exit</button>
+                </div>
+
+                
+        
+                <canvas></canvas>
+            </div>
+        </div>
+        
+        <!-- Scripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    
+        <script src="js/backgrounds.js"></script>
+        <script src="js/characters.js"></script>
+        <script src="js/functions.js"></script>
+        <script src="js/classes.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
